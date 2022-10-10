@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Hubtel.Wallets.Api.Data;
 
 namespace Hubtel.Wallets.Api
 {
@@ -26,7 +28,12 @@ namespace Hubtel.Wallets.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDbContext<HubtelDbContext>
+               (options => options.UseMySql(Configuration.GetConnectionString("con_Hubtel_Db")));
+
         }
+        //, new MySQServerVersion(new Version())
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
