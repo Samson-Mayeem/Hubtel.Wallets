@@ -6,15 +6,15 @@ namespace Hubtel.Wallets.Api.Models
     public class AddWallet
     {
         [Key]
-        public long WalletId { get; set; }
+        public int WalletId { get; set; }
        
-        public long UserId { get; set; }
+        public int UserId { get; set; }
         
         public string Name { get; set; }
    
         public string Type { get; set; }
        
-        public long AccountNumber { get; set; }
+        public int AccountNumber { get; set; }
        
         public string AccountScheme { get; set; }
         

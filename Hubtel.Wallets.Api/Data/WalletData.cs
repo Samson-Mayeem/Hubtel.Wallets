@@ -6,14 +6,24 @@ using System.Threading.Tasks;
 
 namespace Hubtel.Wallets.Api.Data
 {
-    public class WalletData : IWallet
+    public class WalletData : IWalletData
     {
-        private HubtelDbContext _hubtelDbContext;
+       private HubtelDbContext _dbContext;
 
-        public WalletData(HubtelDbContext hubtelDbContext)
+        public WalletData(HubtelDbContext dbContext)
         {
-            _hubtelDbContext = hubtelDbContext;
+            _dbContext = dbContext;
         }
+        /*public List<Wallet> GetAllWallets()
+                {
+                    return _hubtelDbContext.wallets.ToList();
+                }
+
+                public async Task<Wallet> GetWalletById(int WalletId)
+                {
+                    var wallet = await _hubtelDbContext.wallets.FindAsync(WalletId);
+                    return wallet;
+                }*/
 
         public Wallet AddWallet(Wallet wallet)
         {
@@ -27,12 +37,12 @@ namespace Hubtel.Wallets.Api.Data
 
         public List<Wallet> GetAllWallets()
         {
-            return _hubtelDbContext.wallets.ToList();
+            return _dbContext.wallets.ToList();
         }
 
         public void GetWalletById(int WalletId)
         {
-            throw new System.NotImplementedException();
+            _dbContext.wallets.Find(WalletId);   
         }
 
         public Wallet UpdateWallet(Wallet wallet)

@@ -1,9 +1,10 @@
 ﻿using Hubtel.Wallets.Api.Models.Domain;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Hubtel.Wallets.Api.Data
 {
-    public interface IWallet
+    public interface IWalletData
     {
         List<Wallet> GetAllWallets();
         Wallet AddWallet(Wallet wallet);

@@ -31,7 +31,7 @@ namespace Hubtel.Wallets.Api
 
             services.AddDbContext<HubtelDbContext>
                (options => options.UseMySql(Configuration.GetConnectionString("con_Hubtel_Db"), new MySqlServerVersion(new Version())));
-            services.AddScoped<IWallet, WalletData>();
+            services.AddScoped<IWalletData, WalletData>();
         }
         //
 
