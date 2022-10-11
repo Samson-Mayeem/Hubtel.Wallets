@@ -1,21 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hubtel.Wallets.Api.Models.Domain
 {
     public class Wallet
     {
         [Key]
-        public int Id { get; set; }
+        public int WalletId { get; set; }
+        [Required]
+        public int UserId { get; set; }
         [Required]
         public string Name { get; set; }
-        public enum Type { Momo, Card }
+        [Required]
+        public string Type { get; set; }
         [Required]
         public long AccountNumber { get; set; }
-        public enum AccountScheme { visa, mastercard, mtn, vodafone, airteltigo  }
+        [Required]
+        public string AccountScheme { get; set; }
         [Required]
         public DateTime DateCreatedAt{ get; set; }
+        [Required]
         public string AccountOwnerNumber { get; set; }
     } 
 }
