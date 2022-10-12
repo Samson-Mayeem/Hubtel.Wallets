@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Hubtel.Wallets.Api.Data;
+using Hubtel.Wallets.Api.IServices;
+using Hubtel.Wallets.Api.Services;
 
 namespace Hubtel.Wallets.Api
 {
@@ -31,7 +33,7 @@ namespace Hubtel.Wallets.Api
 
             services.AddDbContext<HubtelDbContext>
                (options => options.UseMySql(Configuration.GetConnectionString("con_Hubtel_Db"), new MySqlServerVersion(new Version())));
-            services.AddScoped<IWalletData, WalletData>();
+            services.AddScoped<IWalletService, WalletService>();
         }
         //
 

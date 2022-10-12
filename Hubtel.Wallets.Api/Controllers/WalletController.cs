@@ -6,25 +6,45 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Hubtel.Wallets.Api.Models.Domain;
 using Hubtel.Wallets.Api.Models;
+using System.Collections.Generic;
+using Hubtel.Wallets.Api.IServices;
 
 namespace Hubtel.Wallets.Api.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
     public class WalletController : Controller
     {
-        private HubtelDbContext hubtelDbContext;
+        private readonly IWalletService walletService;
 
-        public WalletController(HubtelDbContext hubtelDbContext)
+        public WalletController(IWalletService wallet)
         {
-            this.hubtelDbContext = hubtelDbContext;
+            walletService = wallet;
         }
-        [HttpGet]
-        [Route("api/v1/wallets")]
-        public async Task<IActionResult> GetAllWallets()
-        {
-            var wallets = await hubtelDbContext.wallets.ToListAsync();
-            return Json(wallets);
 
+        [HttpGet]
+        [Route("action")]
+        [Route("api/v1/wallets/fetchwallets")]
+        public IEnumerable<Wallet> GetAllWallets()
+        {
+            return walletService.GetAllWallets();
+        }
+
+        [HttpPost]
+        [Route("action")]
+        [Route("api/v1/wallets/addwallet")]
+        public Wallet AddWallets(Wallet wallet)
+        {
+            var save =  walletService.AddWallets(wallet);
+            return save;
+        }
+        [HttpPut]
+        [Route("action")]
+        [Route("api/v1/wallets/addwallet")]
+        public Wallet DeleteWallet(int WalletId)
+        {
+            var save = walletService.DeleteWallet(WalletId);
+            return save;
         }
         //[HttpPost]
         //[Route("api/v1/wallets")]
