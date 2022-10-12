@@ -40,30 +40,19 @@ namespace Hubtel.Wallets.Api.Controllers
         }
         [HttpPut]
         [Route("action")]
-        [Route("api/v1/wallets/addwallet")]
-        public Wallet DeleteWallet(int WalletId)
+        [Route("api/v1/wallets/updatewallet")]
+        public Wallet UpdateWallet(Wallet wallet)
         {
-            var save = walletService.DeleteWallet(WalletId);
+            var save = walletService.UpdateWallet(wallet);
             return save;
         }
-        //[HttpPost]
-        //[Route("api/v1/wallets")]
-        /*public async Task<IActionResult> SaveToWallets(AddWallet addwallets)
+        [HttpDelete]
+        [Route("action")]
+        [Route("api/v1/wallets/deletewallet")]
+        public Wallet DeleteWallet(int walletid)
         {
-            var wallets = new Wallet()
-            {
-                UserId = addwallets.UserId,
-                Name = addwallets.Name,
-                Type = addwallets.Type,
-                AccountNumber = addwallets.AccountNumber,
-                AccountScheme = addwallets.AccountScheme,
-                DateCreatedAt = addwallets.DateCreatedAt,
-                AccountOwnerNumber = addwallets.AccountOwnerNumber
-            };
-            await HubtelDbContext.
-            await HubtelDbContext.SaveChangesAsync();
-
-
-        }*/
+            var del = walletService.DeleteWallet(walletid);
+            return del;
+        }
     }
 }
