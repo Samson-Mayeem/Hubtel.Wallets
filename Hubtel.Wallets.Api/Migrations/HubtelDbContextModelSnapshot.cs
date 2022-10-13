@@ -19,9 +19,9 @@ namespace Hubtel.Wallets.Api.Migrations
 
             modelBuilder.Entity("Hubtel.Wallets.Api.Models.Domain.Wallet", b =>
                 {
-                    b.Property<int>("WalletId")
+                    b.Property<long>("WalletId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
                     b.Property<long>("AccountNumber")
                         .HasColumnType("bigint");
@@ -45,8 +45,8 @@ namespace Hubtel.Wallets.Api.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("WalletId");
 
@@ -55,9 +55,9 @@ namespace Hubtel.Wallets.Api.Migrations
 
             modelBuilder.Entity("Hubtel.Wallets.Api.Models.User.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext");

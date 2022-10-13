@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hubtel.Wallets.Api.Migrations
 {
     [DbContext(typeof(HubtelDbContext))]
-    [Migration("20221011194938_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20221013140752_initial migration")]
+    partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,9 +21,9 @@ namespace Hubtel.Wallets.Api.Migrations
 
             modelBuilder.Entity("Hubtel.Wallets.Api.Models.Domain.Wallet", b =>
                 {
-                    b.Property<int>("WalletId")
+                    b.Property<long>("WalletId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
                     b.Property<long>("AccountNumber")
                         .HasColumnType("bigint");
@@ -47,8 +47,8 @@ namespace Hubtel.Wallets.Api.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("WalletId");
 
@@ -57,9 +57,9 @@ namespace Hubtel.Wallets.Api.Migrations
 
             modelBuilder.Entity("Hubtel.Wallets.Api.Models.User.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext");

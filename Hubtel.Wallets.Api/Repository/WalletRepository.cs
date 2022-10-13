@@ -36,8 +36,7 @@ namespace Hubtel.Wallets.Api.Repository
         {
             return await _dbContext.wallets.ToListAsync();
         }
-
-        public async Task<Wallet> Get(int WalletId)
+        public async Task<Wallet> Get(long WalletId)
         {
             return await _dbContext.wallets.FindAsync(WalletId);
         }

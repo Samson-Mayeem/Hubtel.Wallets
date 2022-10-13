@@ -8,7 +8,7 @@ namespace Hubtel.Wallets.Api.Models.Domain
     public class Wallet
     {
         [Key]
-        public int WalletId { get; set; }
+        public long WalletId { get; set; }
         [Required]
         public long UserId { get; set; }
         [Required]
