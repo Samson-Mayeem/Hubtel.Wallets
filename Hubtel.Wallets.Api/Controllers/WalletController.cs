@@ -8,11 +8,13 @@ using Hubtel.Wallets.Api.Models.Domain;
 using Hubtel.Wallets.Api.Models;
 using System.Collections.Generic;
 using Hubtel.Wallets.Api.Repository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hubtel.Wallets.Api.Controllers
-{
-    [Route("api/[controller]")]
+{ 
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class WalletController : Controller
     {
         private readonly IWalletRepository _walletRepository;
@@ -23,6 +25,8 @@ namespace Hubtel.Wallets.Api.Controllers
         }
 
         [HttpGet]
+        [Route("action")]
+        [Route("api/wallets/get")]
         public async Task<IEnumerable<Wallet>> GetAllWallets()
         {
             return await _walletRepository.Get();
@@ -39,7 +43,7 @@ namespace Hubtel.Wallets.Api.Controllers
             var newWallet = await _walletRepository.AddWallets(wallet);
             return CreatedAtAction(nameof(GetAllWallets), new { id = newWallet.WalletId }, newWallet);
         }
-        [HttpPut("{id}")]
+        [HttpPut("{walletid}")]
         public async Task<ActionResult<Wallet>> UpdateWallet(long walletid, [FromBody] Wallet wallet)
         {
             if (walletid != wallet.WalletId)
@@ -47,6 +51,17 @@ namespace Hubtel.Wallets.Api.Controllers
                 return BadRequest();
             }
             await _walletRepository.UpdateWallet(wallet);
+            return NoContent();
+        }
+        [HttpDelete]
+        public async Task<ActionResult<Wallet>> DeleteWallet(long walletid)
+        {
+            var deleteWallet = await _walletRepository.Get(walletid);
+            if (deleteWallet != null)
+            {
+                return BadRequest();
+            }
+            await _walletRepository.DeleteWallet(deleteWallet.WalletId);
             return NoContent();
         }
     }
