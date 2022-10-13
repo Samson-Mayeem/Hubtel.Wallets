@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using Hubtel.Wallets.Api.Models.Domain;
 using Hubtel.Wallets.Api.Models;
 using System.Collections.Generic;
-using Hubtel.Wallets.Api.IServices;
+using Hubtel.Wallets.Api.Repositories;
+using Hubtel.Wallets.Api.Repository;
 
 namespace Hubtel.Wallets.Api.Controllers
 {
@@ -15,32 +16,28 @@ namespace Hubtel.Wallets.Api.Controllers
     [ApiController]
     public class WalletController : Controller
     {
-        private readonly IWalletService walletService;
+        private readonly IWalletRepository _walletRepository;
 
-        public WalletController(IWalletService wallet)
+        public WalletController(IWalletRepository walletRepository)
         {
-            walletService = wallet;
+            this._walletRepository = walletRepository;
         }
 
         [HttpGet]
-        [Route("action")]
-        [Route("api/v1/wallets/fetchwallets")]
-        public IEnumerable<Wallet> GetAllWallets()
+        public async Task<IEnumerable<Wallet>> GetAllWallets()
         {
-            return walletService.GetAllWallets();
+            return await _walletRepository.GetAllWallets();
         }
 
-        [HttpPost]
-        [Route("action")]
-        [Route("api/v1/wallets/addwallet")]
-        public Wallet AddWallets(Wallet wallet)
+        [HttpGet("{id}")]
+        public Task<ActionResult<Wallet>> GetWalletById(long walletid)
         {
-            var save =  walletService.AddWallets(wallet);
-            return save;
+            return _walletRepository.GetWalletById(walletid);
+
         }
         [HttpPut]
         [Route("action")]
-        [Route("api/v1/wallets/updatewallet")]
+        [Route("api/wallets/updatewallet")]
         public Wallet UpdateWallet(Wallet wallet)
         {
             var save = walletService.UpdateWallet(wallet);
@@ -48,7 +45,7 @@ namespace Hubtel.Wallets.Api.Controllers
         }
         [HttpDelete]
         [Route("action")]
-        [Route("api/v1/wallets/deletewallet")]
+        [Route("api/wallets/deletewallet")]
         public Wallet DeleteWallet(int walletid)
         {
             var del = walletService.DeleteWallet(walletid);
