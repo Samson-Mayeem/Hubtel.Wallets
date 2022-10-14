@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Diagnostics.Metrics;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace Hubtel.Wallets.Api.Repository
 {
@@ -20,8 +22,17 @@ namespace Hubtel.Wallets.Api.Repository
 
         public async Task<Wallet> AddWallets(Wallet wallet)
         {
-            _dbContext.wallets.Add(wallet);
-            await _dbContext.SaveChangesAsync();
+            List<Wallet> wallets = new List<Wallet>();
+            List<User> users = new List<User>();
+
+            foreach (var us in users)
+            {
+                if (wallets.Count() !> 5)
+                {
+                    _dbContext.wallets.Add(wallet);
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
             return wallet;
         }
 

@@ -1,14 +1,13 @@
-﻿using Hubtel.Wallets.Api.Data;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using Hubtel.Wallets.Api.Models.Domain;
-using Hubtel.Wallets.Api.Models;
 using System.Collections.Generic;
-using Hubtel.Wallets.Api.Repository;
 using Microsoft.AspNetCore.Authorization;
+using Hubtel.Wallets.Api;
+using Hubtel.Wallets.Api.Controllers;
+using Hubtel.Wallets.Api.Repository;
+using Hubtel.Wallets.Api.Models.Domain;
 
 namespace Hubtel.Wallets.Api.Controllers
 { 
@@ -18,7 +17,6 @@ namespace Hubtel.Wallets.Api.Controllers
     public class WalletController : Controller
     {
         private readonly IWalletRepository _walletRepository;
-
         public WalletController(IWalletRepository walletRepository)
         {
             this._walletRepository = walletRepository;
