@@ -19,9 +19,18 @@ namespace Hubtel.Wallets.Api.Repository
         {
             _dbContext = dbContext;
         }
+        public async Task<Wallet> GetById(long WalletId)
+        {
+            return await _dbContext.wallets.FindAsync(WalletId);
+        }
 
-    
-        public async Task AddWallet(Wallet wallet)
+        public async Task<IEnumerable<Wallet>> GetAll()
+        {
+            return await _dbContext.wallets.ToListAsync();
+        }
+
+
+        public async Task AddWallets(Wallet wallet)
         {
             _dbContext.wallets.Add(wallet);
             await _dbContext.SaveChangesAsync();
@@ -30,19 +39,8 @@ namespace Hubtel.Wallets.Api.Repository
         public async Task DeleteWallet(long id)
         {
             var walletToDelete = await _dbContext.wallets.FindAsync(id);
-             _dbContext.wallets.Remove(walletToDelete);
+            _dbContext.wallets.Remove(walletToDelete);
             await _dbContext.SaveChangesAsync();
-        }
-    
-
-        public async Task<IEnumerable<Wallet>> GetAll()
-        {
-            return await _dbContext.wallets.ToListAsync();
-        }
-
-        public async Task<Wallet> Get(long WalletId)
-        {
-            return await _dbContext.wallets.FindAsync(WalletId);
         }
 
         public async Task UpdateWallet(Wallet wallet)
@@ -50,5 +48,7 @@ namespace Hubtel.Wallets.Api.Repository
             _dbContext.Entry(wallet).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }
+
+
     }
 }

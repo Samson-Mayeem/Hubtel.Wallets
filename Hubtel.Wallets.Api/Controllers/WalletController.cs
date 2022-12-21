@@ -25,18 +25,27 @@ namespace Hubtel.Wallets.Api.Controllers
         }
 
         [HttpGet]
-        [Route("action")]
         [Route("api/v1/wallet")]
-        public async Task<IEnumerable<Wallet>> GetAllWallets()
+        public async Task<IActionResult> GetAllWallets()
         {
-            return await _walletRepository.Get();
+            try
+            {
+                var wallets = await _walletRepository.GetAll();
+                return Ok(wallets);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPost]
+        [Route("api/v1/wallet")]
         public async Task<IActionResult> AddWallet([FromBody] Wallet wallet)
         {
             try
             {
-                await _walletRepository.AddWallets(wallet);
+                await _walletRepository.UpdateWallet
+                    (wallet);
                 return Ok();
             }
             catch (Exception ex)
@@ -44,29 +53,20 @@ namespace Hubtel.Wallets.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("{walletid}")]
-        public async Task<ActionResult<Wallet>> Get(long walletid)
+        [HttpGet("{id}")]
+        [Route("api/v1/wallet")]
+
+        public async Task<ActionResult<Wallet>> Get(long id)
         {
-            return await _walletRepository.Get(walletid);
+            return await _walletRepository.GetById(id);
         }
         
-        [HttpGet]
-        public async Task<IActionResult> GetAllEmployees()
+        
+        [HttpPut("{id}")]
+        [Route("api/v1/wallet")]
+        public async Task<ActionResult<Wallet>> UpdateWallet(long id, [FromBody] Wallet wallet)
         {
-            try
-            {
-                var employees = await _walletRepository.Get();
-                return Ok(employees);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-        [HttpPut("{walletid}")]
-        public async Task<ActionResult<Wallet>> UpdateWallet(long walletid, [FromBody] Wallet wallet)
-        {
-            if (walletid != wallet.WalletId)
+            if (id != wallet.WalletId)
             {
                 return BadRequest();
             }

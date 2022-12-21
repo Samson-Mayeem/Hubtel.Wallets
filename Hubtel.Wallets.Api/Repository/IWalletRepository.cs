@@ -6,8 +6,7 @@ namespace Hubtel.Wallets.Api.Repository
 {
     public interface IWalletRepository
     {
-        Task<IEnumerable<Wallet>> Get();
-        Task<Wallet> AddWallets(Wallet wallet);
+        Task<IEnumerable<Wallet>> GetAll();
         Task UpdateWallet(Wallet wallet);
         Task DeleteWallet(long id);
         Task<Wallet> GetById(long WalletId);
