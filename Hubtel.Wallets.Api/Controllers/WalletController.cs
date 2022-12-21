@@ -8,6 +8,7 @@ using Hubtel.Wallets.Api;
 using Hubtel.Wallets.Api.Controllers;
 using Hubtel.Wallets.Api.Repository;
 using Hubtel.Wallets.Api.Models.Domain;
+using System;
 
 namespace Hubtel.Wallets.Api.Controllers
 { 
@@ -17,6 +18,7 @@ namespace Hubtel.Wallets.Api.Controllers
     public class WalletController : Controller
     {
         private readonly IWalletRepository _walletRepository;
+
         public WalletController(IWalletRepository walletRepository)
         {
             this._walletRepository = walletRepository;
@@ -24,22 +26,42 @@ namespace Hubtel.Wallets.Api.Controllers
 
         [HttpGet]
         [Route("action")]
-        [Route("api/wallets/get")]
+        [Route("api/v1/wallet")]
         public async Task<IEnumerable<Wallet>> GetAllWallets()
         {
             return await _walletRepository.Get();
         }
-
+        [HttpPost]
+        public async Task<IActionResult> AddWallet([FromBody] Wallet wallet)
+        {
+            try
+            {
+                await _walletRepository.AddWallets(wallet);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpGet("{walletid}")]
         public async Task<ActionResult<Wallet>> Get(long walletid)
         {
             return await _walletRepository.Get(walletid);
         }
-        [HttpPost]
-        public async Task<ActionResult<Wallet>> Get([FromBody] Wallet wallet)
+        
+        [HttpGet]
+        public async Task<IActionResult> GetAllEmployees()
         {
-            var newWallet = await _walletRepository.AddWallets(wallet);
-            return CreatedAtAction(nameof(GetAllWallets), new { id = newWallet.WalletId }, newWallet);
+            try
+            {
+                var employees = await _walletRepository.Get();
+                return Ok(employees);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPut("{walletid}")]
         public async Task<ActionResult<Wallet>> UpdateWallet(long walletid, [FromBody] Wallet wallet)
@@ -51,16 +73,20 @@ namespace Hubtel.Wallets.Api.Controllers
             await _walletRepository.UpdateWallet(wallet);
             return NoContent();
         }
-        [HttpDelete]
-        public async Task<ActionResult<Wallet>> DeleteWallet(long walletid)
+       
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteWallet(int id)
         {
-            var deleteWallet = await _walletRepository.Get(walletid);
-            if (deleteWallet != null)
+            try
             {
-                return BadRequest();
+                await _walletRepository.DeleteWallet(id);
+                return Ok();
             }
-            await _walletRepository.DeleteWallet(deleteWallet.WalletId);
-            return NoContent();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
     }
 }

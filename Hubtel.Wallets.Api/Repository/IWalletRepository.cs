@@ -10,6 +10,6 @@ namespace Hubtel.Wallets.Api.Repository
         Task<Wallet> AddWallets(Wallet wallet);
         Task UpdateWallet(Wallet wallet);
         Task DeleteWallet(long id);
-        Task<Wallet> Get(long WalletId);
+        Task<Wallet> GetById(long WalletId);
     }
 }
